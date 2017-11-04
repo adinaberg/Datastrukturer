@@ -1,7 +1,5 @@
 import java.util.Arrays;
 
-
-
 public class BinSearchIntSet implements IntSet {
 	
 	int[] set;
@@ -67,7 +65,7 @@ public class BinSearchIntSet implements IntSet {
     public boolean contains(int element) {
     	int min = 0;
     	int max = size - 1;
-    	while (max - min >= 0) {
+    	while (max - min > 0) {
     		int middle = (max + min)/2;
     		int candidate = set[middle];
     		if (candidate == element) {
@@ -101,9 +99,14 @@ public class BinSearchIntSet implements IntSet {
 		
 		BinSearchIntSet test = new BinSearchIntSet();
 		System.out.println(Arrays.toString(test.get()));
-		boolean t = test.contains(10);
-			System.out.println(t);
+
+
 		
+		boolean t = test.contains(-2);
+		System.out.println(t);
+
+		System.out.println(t);
+
 		//test.add(3);
 	
 		
