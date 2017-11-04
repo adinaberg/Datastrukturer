@@ -139,6 +139,8 @@ public class BinSearchIntSet implements IntSet {
 			int min = 0;
 			int max = size - 1;
 			while (max - min > 0) {
+				
+				
 				int middle = (max + min)/2;
 
 				int candidate = set[middle];
@@ -152,7 +154,7 @@ public class BinSearchIntSet implements IntSet {
 				}
 				//element is in lower half
 				else {
-					max = middle - 1;
+					max = middle;
 				}		
 			}
 			//if element is last
