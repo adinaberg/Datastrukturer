@@ -1,0 +1,139 @@
+import java.util.Arrays;
+
+//for testing purposes only
+public class Dummy implements IntSet{
+	
+	int[] set;
+	int size;
+	
+	//constructor
+	public Dummy() {
+		set = new int[1];
+		size = 0;
+	}
+	
+	public int[] binSearch(int element) {
+		//vals contains return values
+		//vals[0] = -1 if element is not in array. Then vals[1] dictates index to put element in
+		//vals[0] = 1 if element is in array. vals[1] then tells index at which it was found (not necessary for this lab but still potentially useful) 
+		int[] vals = new int[2];
+		//if set is empty
+		if (size == 0) {
+			vals[0] = -1;
+			vals[1] = 0;
+			return vals;
+		}
+		int min = 0;
+		int max = size - 1;
+		while (max - min > 0) {
+			int middle = (max + min)/2;
+			int candidate = set[middle];
+			//element is found
+			if (candidate == element) {
+				//found element
+				vals[0] = 1;
+				//in this place
+				vals[1] = middle;
+				//return values and break out of method
+				return vals;
+			}
+			
+			//continue search in higher half
+			else if (candidate < element) {
+				min = middle + 1;
+			}
+			//continue search in lower half
+			else {
+				max = middle;
+			}
+		}
+		
+		//when out of while, check last element
+		if (set[size - 1] == element) {
+			vals[0] = 1;
+			vals[1] = size - 1;
+			return vals;
+		}
+		else if (set[size - 1] < element) {
+			vals[0] = -1;
+			//new element should be placed at the end
+			vals[1] = size + 1;
+			return vals;
+		}
+		//entire set checked, element not found
+		vals[0] = -1;
+		//max = min place to put element when while loop has breaked
+		vals[1] = max;
+		return vals;
+
+	}
+	
+
+	
+	public void add(int element) {
+		int[] vals = binSearch(element);
+		System.out.println("vals in add " + Arrays.toString(vals));
+		//position to put new element in
+		int pos = vals[1];
+		//vals[0] = 1 means element already in set; in that case do nothing
+		if (vals[0] < 0) {
+			//if there is space left
+			if (set.length - size > 0) {
+				//shift elements 1 step
+				for (int i = 0; i < size - pos; i++) {
+					set[size - i] = set[size - 1 - i];
+				}
+				set[pos] = element;
+			}
+			//increase set capacity
+			else {
+				int[] newSet = new int[2*set.length];
+				//copy from old set (below new element)
+				for (int i = 0; i < pos; i++) {
+					newSet[i] = set[i];
+				}
+				//add new element
+				newSet[pos] = element;
+				//copy from old set (above new element)
+				for (int i = 0; i < size - pos; i++) {
+					newSet[pos + 1 + i] = set[pos + i];
+				}
+				set = newSet;
+			}
+			//update size of set
+			size++;
+		}
+		
+	}
+	
+	public void remove(int element) {
+		
+	}
+	
+	public boolean contains(int element) {
+		return false;
+	}
+	
+	public int[] getSet() {
+		return set;
+	}
+	public int getSize() {
+		return size;
+	}
+	
+	
+	public static void main(String[] args) {
+		Dummy test = new Dummy();
+		System.out.println("Set: " + Arrays.toString(test.getSet()) + " Size: " + test.getSize());
+		//int[] result = test.binSearch(5);
+		//System.out.println(Arrays.toString(result));
+		test.add(2);
+		System.out.println("Set: " + Arrays.toString(test.getSet()) + " Size: " + test.getSize());
+
+		test.add(3);
+		System.out.println("Set: " + Arrays.toString(test.getSet()) + " Size: " + test.getSize());
+
+		
+
+	}
+}

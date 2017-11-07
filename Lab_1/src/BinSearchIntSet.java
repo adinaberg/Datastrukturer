@@ -89,7 +89,6 @@ public class BinSearchIntSet implements IntSet {
 			int min = 0;
 			int max = size - 1;
 
-			//check if set is []
 			int middle = (max + min)/2;
 
 
