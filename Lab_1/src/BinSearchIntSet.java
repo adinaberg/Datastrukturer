@@ -1,209 +1,155 @@
 import java.util.Arrays;
 
-public class BinSearchIntSet implements IntSet {
 
+public class BinSearchIntSet implements IntSet{
+	
 	int[] set;
 	int size;
-
-	public BinSearchIntSet () {
+	
+	//constructor
+	public BinSearchIntSet() {
 		set = new int[1];
 		size = 0;
 	}
-
-	public void add(int element) {
+	
+	private int[] binSearch(int element) {
+		//vals contains return values
+		//vals[0] = -1 if element is not in array. Then vals[1] dictates index to put element in
+		//vals[0] = 1 if element is in array. vals[1] then tells index at which it was found (not necessary for this lab but still potentially useful) 
+		int[] vals = new int[2];
+		//if set is empty
+		if (size == 0) {
+			vals[0] = -1;
+			vals[1] = 0;
+			return vals;
+		}
 		int min = 0;
 		int max = size - 1;
-		if (size == 0) max = 0;
-
-		
 		while (max - min > 0) {
 			int middle = (max + min)/2;
 			int candidate = set[middle];
+			//element is found
 			if (candidate == element) {
-				//element already in set, break while
-				break;
+				//found element
+				vals[0] = 1;
+				//in this place
+				vals[1] = middle;
+				//return values and break out of method
+				return vals;
 			}
-			//element is in higher half
+		
+			//continue search in higher half
 			else if (candidate < element) {
 				min = middle + 1;
 			}
-			//element is in lower half
+			//continue search in lower half
 			else {
 				max = middle;
-			}   		
-
-		}
-
-		//catch special case
-		if (max == size - 1) {
-			//check last element in set
-			if(set[max] == element) {
-				//don't enter next if
-				max++;
 			}
-			//add element larger than current largest
-			else if (set[max] < element) {
-				max++;
-				min++;
-			}
+		} //end while
+		
+		//when out of while, check last element
+		if (set[size - 1] == element) {
+			vals[0] = 1;
+			vals[1] = size - 1;
+			return vals;
 		}
+		else if (set[size - 1] < element) {
+			vals[0] = -1;
+			//new element should be placed at the end
+			vals[1] = size;
+			return vals;
+		}
+		
+		//entire set checked, element not found
+		vals[0] = -1;
+		//max = min place to put element when while loop has breaked
+		vals[1] = max;
+		return vals;
 
-		//found index of new array and last index of set does not contain element
-		if (max - min == 0) {
+	} //end binSearch
+	
+
+	
+	public void add(int element) {
+		int[] vals = binSearch(element);
+		//position to put new element in
+		int pos = vals[1];
+		//vals[0] = 1 means element already in set; in that case do nothing
+		if (vals[0] < 0) {
 			//if there is space left
 			if (set.length - size > 0) {
-
 				//shift elements 1 step
-				for (int i = 0; i < size - max; i++) {
+				for (int i = 0; i < size - pos; i++) {
 					set[size - i] = set[size - 1 - i];
 				}
-				set[max] = element;
-				//update size of set
+				set[pos] = element;
 			}
-
 			//increase set capacity
 			else {
 				int[] newSet = new int[2*set.length];
 				//copy from old set (below new element)
-				for (int i = 0; i < max; i++) {
+				for (int i = 0; i < pos; i++) {
 					newSet[i] = set[i];
 				}
 				//add new element
-				newSet[max] = element;
+				newSet[pos] = element;
 				//copy from old set (above new element)
-				for (int i = 0; i < size - max; i++) {
-					newSet[max + 1 + i] = set[max + i];
+				for (int i = 0; i < size - pos; i++) {
+					newSet[pos + 1 + i] = set[pos + i];
 				}
 				set = newSet;
 			}
 			//update size of set
 			size++;
-
 		}
-
+		
 	}
-
-
+	
 	public void remove(int element) {
-		if (size > 0) {
-			int min = 0;
-			int max = size - 1;
-
-			int middle = (max + min)/2;
-
-
-			while (max - min > 0) {
-				int candidate = set[middle];
-				if (candidate == element) {
-					//element already in set, break while
-					break;
-				}
-				//element is in higher half
-				else if (candidate < element) {
-					min = middle + 1;
-				}
-				//element is in lower half
-				else {
-					max = middle;
-				}   		
-				middle = (max + min)/2;
+		int[] vals = binSearch(element);
+		System.out.println("vals in remove " + Arrays.toString(vals));
+		//position of element to remove
+		int pos = vals[1];
+		//only remove if element is in set
+		if (vals[0] > 0) {
+			for (int i = 0; i < size - pos - 1; i++) {
+				set[pos + i] = set[pos + i + 1];
 			}
-
-			//catch special case when element is in last place
-			if (max == size - 1 && set[max] == element) {
-				//to make sure we enter next if
-				max++;
-			}
-
-			//if element found, remove
-			if(!(max - min == 0)) {
-				for (int i = 0; i < size - middle - 1; i++) {
-					set[middle + i] = set[middle + i + 1];
-				}
-				//shrink size
-				size--;
-			}
-
+			//shrink size
+			size--;
 		}
-
-
 	}
-
-
-
-
-
+	
 	public boolean contains(int element) {
-		if (size > 0) {
-			int min = 0;
-			int max = size - 1;
-			while (max - min > 0) {
-				
-				
-				int middle = (max + min)/2;
-
-				int candidate = set[middle];
-				if (candidate == element) {
-					//element found
-					return true;
-				}
-				//element is in higher half
-				else if (candidate < element) {
-					min = middle + 1;
-				}
-				//element is in lower half
-				else {
-					max = middle;
-				}		
-			}
-			//if element is last
-			if (max == size - 1 && set[max] == element) {
-				return true;
-
-			}
+		int[] vals = binSearch(element);
+		if (vals[0] > 0) {
+			return true;
 		}
-
-		return false;	
+		else 
+			return false;
 	}
-
-
+	
 	public int[] getSet() {
 		return set;
 	}
 	public int getSize() {
 		return size;
 	}
-
-
-	public static void main(String args[]) {
-
-
-        BinSearchIntSet set2 = new BinSearchIntSet();
+	
+	
+	public static void main(String[] args) {
+		BinSearchIntSet set2 = new BinSearchIntSet();
 		System.out.println("Set: " + Arrays.toString(set2.getSet()) + " Size: " + set2.getSize());
         set2.add(1);
-		System.out.println("Set: " + Arrays.toString(set2.getSet()) + " Size: " + set2.getSize());
         set2.add(2);
-		System.out.println("Set: " + Arrays.toString(set2.getSet()) + " Size: " + set2.getSize());
         set2.add(1);
-		System.out.println("Set: " + Arrays.toString(set2.getSet()) + " Size: " + set2.getSize());
         set2.remove(3);
-		System.out.println("Set: " + Arrays.toString(set2.getSet()) + " Size: " + set2.getSize());
         set2.remove(1);
-		System.out.println("Set: " + Arrays.toString(set2.getSet()) + " Size: " + set2.getSize());
-
         System.out.println(set2.contains(1));
         System.out.println(set2.contains(2));
         System.out.println(set2.contains(3));
-
-		//test.remove(4);
-		//System.out.println("Set: " + Arrays.toString(test.getSet()) + " Size: " + test.getSize());
-
-		//test.remove(-1);
-		//System.out.println("Set: " + Arrays.toString(test.getSet()) + " Size: " + test.getSize());
-
-
-		//boolean t = test.contains(-2);
-
+		
+		
 	}
-
 }

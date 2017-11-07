@@ -54,6 +54,7 @@ public class BinSearchGenSet<E extends Comparable<? super E>> implements GenSet<
 			return vals;
 		}
 		else if (set.get(set.size() - 1).compareTo(element) < 0) {
+			System.out.println("In else if");
 			vals[0] = -1;
 			//new element should be placed at the end
 			vals[1] = set.size();
@@ -128,13 +129,6 @@ public class BinSearchGenSet<E extends Comparable<? super E>> implements GenSet<
 		System.out.println(newSet.contains(3));
 		System.out.println(newSet.contains(5));
 		System.out.println(newSet.contains(-2));
-		
-		
-        BinSearchGenSet<String> kurser = new BinSearchGenSet<>();
-        kurser.add("DAT03767");
-        kurser.add("DAT037");
-        System.out.println(kurser.contains("DAT037"));
-        System.out.println(kurser.getSet());
 		
 
 	}

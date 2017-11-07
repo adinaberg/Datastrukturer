@@ -3,14 +3,19 @@ import java.util.ArrayList;
 //implements Genset and requires E to extend Comparable
 public class BinSearchGenSet<E extends Comparable<? super E>> implements GenSet<E> {
 
-	ArrayList<E> set;
+	ArrayList<Integer> set;
 
 	//constructor
 	public BinSearchGenSet() {
-		set = new ArrayList<E>();
+		set = new ArrayList<Integer>();
+		set.add(1);
+		set.add(4);
+		set.add(7);
 	}
 	
-
+	
+	
+	
 	public int[] binSearch(E element) {
 		//vals contains return values
 		//vals[0] = -1 if element is not in array. Then vals[1] dictates index to put element in
@@ -54,6 +59,7 @@ public class BinSearchGenSet<E extends Comparable<? super E>> implements GenSet<
 			return vals;
 		}
 		else if (set.get(set.size() - 1).compareTo(element) < 0) {
+			System.out.println("In else if");
 			vals[0] = -1;
 			//new element should be placed at the end
 			vals[1] = set.size();
@@ -69,36 +75,26 @@ public class BinSearchGenSet<E extends Comparable<? super E>> implements GenSet<
 	} //end binSearch
 	
 	
+	
+	
+	
+	
 
 	public void add(E element) {
-		int[] vals = binSearch(element);
-		//position to put new element in
-		int pos = vals[1];
-		//vals[0] = 1 means element already in set; in that case do nothing
-		if (vals[0] < 0) {
-			set.add(pos,element);
-		}
+
 	}
 
 
+
 	public boolean contains(E element) {
-		int[] vals = binSearch(element);
-		if (vals[0] > 0) {
-			return true;
-		}
-		else 
-			return false;
+		return false;
 	}
 
 
 	public void remove(E element) {
-		set.remove(element);
 
 	}
-	
-	public ArrayList<E> getSet() {
-		return set;
-	}
+
 
 
 	public int getSize() {
@@ -111,31 +107,11 @@ public class BinSearchGenSet<E extends Comparable<? super E>> implements GenSet<
 		//array.add(5);
 		//array.remove(1);
 		int s = array.size();
-		//System.out.println(array);
-		//System.out.println(s);
+		System.out.println(array);
+		System.out.println(s);
 
 		
 		BinSearchGenSet<Integer> newSet = new BinSearchGenSet<Integer>();
-		newSet.add(1);
-		System.out.println(newSet.getSet());
-		newSet.add(5);
-		System.out.println(newSet.getSet());
-		newSet.add(1);
-		System.out.println(newSet.getSet());
-		newSet.add(2);		
-		System.out.println(newSet.getSet());
-		
-		System.out.println(newSet.contains(3));
-		System.out.println(newSet.contains(5));
-		System.out.println(newSet.contains(-2));
-		
-		
-        BinSearchGenSet<String> kurser = new BinSearchGenSet<>();
-        kurser.add("DAT03767");
-        kurser.add("DAT037");
-        System.out.println(kurser.contains("DAT037"));
-        System.out.println(kurser.getSet());
-		
 
 	}
 

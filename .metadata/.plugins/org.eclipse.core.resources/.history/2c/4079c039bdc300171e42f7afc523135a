@@ -129,13 +129,6 @@ public class BinSearchGenSet<E extends Comparable<? super E>> implements GenSet<
 		System.out.println(newSet.contains(5));
 		System.out.println(newSet.contains(-2));
 		
-		
-        BinSearchGenSet<String> kurser = new BinSearchGenSet<>();
-        kurser.add("DAT03767");
-        kurser.add("DAT037");
-        System.out.println(kurser.contains("DAT037"));
-        System.out.println(kurser.getSet());
-		
 
 	}
 
