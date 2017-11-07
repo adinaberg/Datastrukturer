@@ -1,0 +1,19 @@
+
+public class BinHeap<E> implements PrioQueue<E> {
+	
+	
+	
+	
+    public void add(E e) {
+    	
+    }
+    public E peek() {
+    	
+    }
+    public E poll() {
+    	
+    }
+    public void remove(E e) {
+    	
+    }
+}
