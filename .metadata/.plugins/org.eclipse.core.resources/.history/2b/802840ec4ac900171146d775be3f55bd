@@ -1,0 +1,86 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+
+public class BinHeap<E> implements PrioQueue<E> {
+	
+	ArrayList<E> heap;
+	Comparator comp;
+	
+	// Constructor
+	public BinHeap(Comparator<? super E> comp) {
+		heap = new ArrayList<E>();
+		this.comp = comp;
+	}
+	
+	// Iterator
+	@Override
+	public Iterator<E> iterator() {
+		Iterator<E> it = new Iterator<E>() {
+
+			private int currentIndex = 0;
+
+			@Override
+			public boolean hasNext() {
+				return currentIndex < heap.size() && heap.get(currentIndex) != null;
+			}
+
+			@Override
+			public E next() {
+				return heap.get(currentIndex++);
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
+		return it;
+	}
+	
+	private void bubbleUp(int index) {
+		int parent;
+		E temp;
+		if (index != 0) {
+			parent = index/2;
+			if (comp.compare(heap.get(index), heap.get(parent)) < 0) {
+				// Save child locally
+				temp = heap.get(index);
+				// Switch places
+				heap.set(index, heap.get(parent));
+				heap.set(parent, temp);
+				// Recursive call to bubbleUp
+				bubbleUp(parent);
+			}
+		}
+	}
+
+	
+	
+	public void add(E e) {
+		heap.add(e);
+		bubbleUp(heap.size() - 1);
+	}
+	
+	
+	// Returns element of highest priority
+	public E peek() {
+		return heap.get(0);
+	}
+	
+	
+	// Returns element of highest priority and removes it
+	public E poll() {
+		return heap.remove(0);
+	}
+	
+	
+	public void remove(E e) {
+
+	}
+}
+
+
+
+
+
