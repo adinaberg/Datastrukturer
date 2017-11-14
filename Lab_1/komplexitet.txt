@@ -1,9 +1,21 @@
 Datastrukturer DAT037 Lab 1 Grupp 56
 
-The contains method in BinSearchIntSet requires O(logn) amount of time
+The time complexity of the contains method is O(logn). Below is the result of running the Benchmark test on BinSearchIntSet:
 
-Increasing n by a factor 10 does not increase execution time by 10 but rather doubles it. Therefore the complexity is not linear but probably logarithmic.
+set size  execution time (nanoseconds)
+      10             8.1
+     100            14.2
+    1000            40.7
+   10000            45.3
+  100000            53.8
+ 1000000            59.5
+10000000            65.0
 
-The method binSearch called in the method contains requires O(logn) execution time and all other operations in contains requires constant time. We know this because the while loop in binSearch breaks after at most log_2(n) loops. For every iteration, the current interval is halved.
+Increasing set size exponentially only increases execution time linearly. Therefore the complexity is not linear but probably logarithmic. (We also plotted set size to execution time which gave  a logarithmic curve.)
+
+The method binSearch called in the method contains is of time complexity O(logn). We know this because the while loop in binSearch breaks after at most log_2(n) loops (for every iteration, the current interval is halved), and all statements within the while loop execute in constant time. The if and return statements in contains also execute in constant time.
+
+
+
 
 

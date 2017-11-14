@@ -108,7 +108,6 @@ public class BinSearchIntSet implements IntSet{
 	
 	public void remove(int element) {
 		int[] vals = binSearch(element);
-		System.out.println("vals in remove " + Arrays.toString(vals));
 		//position of element to remove
 		int pos = vals[1];
 		//only remove if element is in set
