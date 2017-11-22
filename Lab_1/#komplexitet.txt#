@@ -1,0 +1,10 @@
+Datastrukturer DAT037 Lab 1 Grupp 56
+
+The contains method in BinSearchIntSet requires O(logn) amount of time
+
+Increasing n by a factor 10 does not increase execution time by 10 but rather doubles it. Therefore the complexity is not linear but probably logarithmic.
+
+The method binSearch called in the method contains requires O(logn) execution time and all other operations in contains requires constant time. We know this because the while loop in binSearch breaks after at most log_2(n) loops. For every iteration, the current interval is halved.
+
+
+Hej
