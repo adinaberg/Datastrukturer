@@ -30,8 +30,17 @@ public class StockTrade {
 		return eventualTransaction();
 	}
 
-
-	public Transaction placeBuyBid(Bid bid) { 
+	public Transaction placeBuyBid(Bid bid) {
+		// Buyer allowed to both raise and lower price
+		if (buyersMap.containsKey(bid.name)){
+			buyersQueue.remove(new Bid(bid.name, buyersMap.get(bid.name)));
+		}
+		buyersMap.put(bid.name, bid.price);
+		buyersQueue.add(bid);
+		return eventualTransaction();
+	}
+	
+	public Transaction placeBuyBidReal(Bid bid) { 
 		// If buyer already has a bid, and new bid > old bid, update to new
 		if (buyersMap.containsKey(bid.name)){
 			if (buyersMap.get(bid.name)<bid.price){
