@@ -140,7 +140,7 @@ public class BinHeap<E> implements PrioQueue<E> {
 
 	public void remove(E e) {
 		for (int index = 0; index < heap.size(); index++) {
-			if (comp.compare(heap.get(index), e) == 0) {
+			if (e.equals(heap.get(index))) {
 				// Replace element with last element
 				heap.set(index, heap.get(heap.size() - 1));
 				heap.remove(heap.size() - 1);
