@@ -3,8 +3,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class StockTrade {
-	private BinHeap<Bid> sellersQueue;
-	private BinHeap<Bid> buyersQueue;
+	private PrioQueue<Bid> sellersQueue;
+	private PrioQueue<Bid> buyersQueue;
 	private HashMap<String,Integer> sellersMap;
 	private HashMap<String,Integer> buyersMap;
 
