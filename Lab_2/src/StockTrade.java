@@ -3,12 +3,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class StockTrade {
+	//Queue of sellers, in prio order
 	private PrioQueue<Bid> sellersQueue;
+	//Queue of buyers, in prio order
 	private PrioQueue<Bid> buyersQueue;
+	//Name and bid of sellers
 	private HashMap<String,Integer> sellersMap;
+	//Name and bid of buyers
 	private HashMap<String,Integer> buyersMap;
 
 
+	//Constructor creating empty queues and maps
 	public StockTrade() {  
 		Comparator<Bid> compSell = new BidComparator(true);
 		Comparator<Bid> compBuy = new BidComparator(false);
@@ -19,42 +24,37 @@ public class StockTrade {
 	}
 
 
-
+	//Places a seller's bid and makes transaction if possible
 	public Transaction placeSellBid(Bid bid) {
 		// Seller allowed to both raise and lower price
 		if (sellersMap.containsKey(bid.name)){
+			//Remove previous bid
 			sellersQueue.remove(new Bid(bid.name, sellersMap.get(bid.name)));
 		}
+		//Put new bid in map
 		sellersMap.put(bid.name, bid.price);
+		//Put new bid in queue
 		sellersQueue.add(bid);
+		//Make transaction if possible
 		return eventualTransaction();
 	}
 
+	
 	public Transaction placeBuyBid(Bid bid) {
 		// Buyer allowed to both raise and lower price
 		if (buyersMap.containsKey(bid.name)){
+			//Remove previous bid
 			buyersQueue.remove(new Bid(bid.name, buyersMap.get(bid.name)));
 		}
+		//Put new bid in map
 		buyersMap.put(bid.name, bid.price);
+		//Put new bid in queue
 		buyersQueue.add(bid);
+		//Make transaction if possible
 		return eventualTransaction();
 	}
 	
-	public Transaction placeBuyBidReal(Bid bid) { 
-		// If buyer already has a bid, and new bid > old bid, update to new
-		if (buyersMap.containsKey(bid.name)){
-			if (buyersMap.get(bid.name)<bid.price){
-				buyersQueue.remove(new Bid(bid.name, buyersMap.get(bid.name)));
-				buyersQueue.add(bid);
-				buyersMap.put(bid.name, bid.price);
-			}
-		}else{
-			buyersQueue.add(bid);
-			buyersMap.put(bid.name, bid.price);
-		}
-		return eventualTransaction(); 
-	}
-
+	
 	public Transaction eventualTransaction(){
 		// If highest bid(seller) <= lowest price (buyer), make transaction lol 
 		if (sellersQueue.peek() != null && buyersQueue.peek() != null){
@@ -74,34 +74,11 @@ public class StockTrade {
 	public Iterator<Bid> buyBidsIterator() {
 		return buyersQueue.iterator();
 	}
-	public static void main(String[] args){
-		StockTrade test = new StockTrade();
-		Transaction t1 = test.placeBuyBid(new Bid("Namn",50));
-		System.out.println(test.buyersQueue.getList());
-		t1 = test.placeBuyBid(new Bid("Ada",10));
-		System.out.println(test.buyersQueue.getList());
-		t1 = test.placeBuyBid(new Bid("Bengt",60));
-		System.out.println(test.buyersQueue.getList());
-		t1 = test.placeBuyBid(new Bid("Namn",50));
-		System.out.println(test.buyersQueue.getList());
-		t1 = test.placeBuyBid(new Bid("Namn",40));
-		System.out.println(test.buyersQueue.getList());
-		t1 = test.placeBuyBid(new Bid("Namn",60));
-		System.out.println(test.buyersQueue.getList());
-		t1 = test.placeSellBid(new Bid ("Carro", 59));
-		System.out.println(t1);
-		t1 = test.placeSellBid(new Bid ("Carros syster", 70));
-		t1 = test.placeBuyBid(new Bid("Ada",100));
-		System.out.println(test.sellersQueue.getList());
-		System.out.println(test.buyersQueue.getList());
-
-
-		
-	}
-
-
+	
 	//from java 8 there is static method Comparator.naturalOrder(), but for java 7 this is needed
+	//Compares the prices of bids
 	private class BidComparator implements Comparator<Bid> {
+		// true if comparing sellers, false if comparing buyers
 		private boolean sell;
 
 		@Override

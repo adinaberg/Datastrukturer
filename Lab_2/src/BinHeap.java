@@ -158,58 +158,6 @@ public class BinHeap<E> implements PrioQueue<E> {
 
 
 
-
-	public static void main(String[] args) {
-		Comparator<String> comp = new NaturalOrderComparator<String>();
-		BinHeap<String> test = new BinHeap<String>(comp);
-
-		test.add("Anders");
-		test.add("Andrea");
-		test.add("Bert");
-		test.add("Ina");
-		test.add("Olof");
-		test.poll();
-		test.remove("Bert");
-		test.add("Ulrik");
-		System.out.println(test.getList() + " ");
-
-
-
-
-//		System.out.println(pq.getList());
-
-		//System.out.println( " " + test.getList());
-
-		/*
-		test.add(5);
-		test.add(-4);
-		test.add(6);
-		test.add(1);
-		test.add(3);
-		test.add(0);
-		System.out.println(test.getList() + " ");
-
-		//Integer i = test.poll();
-		test.remove(5);
-		System.out.println(test.getList() + " ");
-
-		test.remove(0);
-		System.out.println(test.getList() + " ");
-
-		test.remove(5);
-		System.out.println(test.getList() + " ");
-
-		test.remove(-4);
-		System.out.println(test.getList() + " ");
-
-
-		test.remove(-4);
-		System.out.println(test.getList() + " ");
-		 */
-
-	}
-
-
 }
 
 
