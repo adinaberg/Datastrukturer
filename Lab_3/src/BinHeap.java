@@ -17,7 +17,6 @@ public class BinHeap<E> implements PrioQueue<E> {
 	@Override
 	public Iterator<E> iterator() {
 		Iterator<E> it = new Iterator<E>() {
-			
 
 			private int currentIndex = 0;
 

@@ -2,22 +2,22 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class BinHeap<E> implements PrioQueue<E> {
+public class BinPairHeap<K,V> implements PrioQueue<V> {
 
-	ArrayList<E> heap;
-	Comparator<? super E> comp;
+}/*
+	ArrayList<Pair> heap;
+	Comparator<? super V> comp;
 
 	// Constructor
-	public BinHeap(Comparator<? super E> comp) {
-		heap = new ArrayList<E>();
+	public BinPairHeap(Comparator<? super Pair> comp) {
+		heap = new ArrayList<Pair>();
 		this.comp = comp;
 	}
 
 	// Iterator
 	@Override
-	public Iterator<E> iterator() {
-		Iterator<E> it = new Iterator<E>() {
-			
+	public Iterator<Pair> iterator() {
+		Iterator<Pair> it = new Iterator<Pair>() {
 
 			private int currentIndex = 0;
 
@@ -27,7 +27,7 @@ public class BinHeap<E> implements PrioQueue<E> {
 			}
 
 			@Override
-			public E next() {
+			public Pair next() {
 				return heap.get(currentIndex++);
 			}
 
@@ -43,7 +43,7 @@ public class BinHeap<E> implements PrioQueue<E> {
 	private void bubbleUp(int index) {
 		if (heap.size() > 1 && index < heap.size()) {
 			int parent;
-			E temp;
+			Pair temp;
 			if (index != 0) {
 				parent = (index - 1)/2;
 				if (comp.compare(heap.get(index), heap.get(parent)) < 0) {
@@ -66,7 +66,7 @@ public class BinHeap<E> implements PrioQueue<E> {
 			int child1 = index*2 + 1;
 			int child2 = index*2 + 2;
 			int winnerChild;
-			E temp;
+			Pair temp;
 			// If not at bottom
 			if (child1  < heap.size()) {
 				// Have only left child
@@ -108,14 +108,14 @@ public class BinHeap<E> implements PrioQueue<E> {
 
 
 	// Adds element in right position of the queue
-	public void add(E e) {
+	public void add(Pair e) {
 		heap.add(e);
 		bubbleUp(heap.size() - 1);
 	}
 
 
 	// Returns element of highest priority
-	public E peek() {
+	public Pair peek() {
 		if (heap.size() > 0) {
 			return heap.get(0);
 		}
@@ -124,9 +124,9 @@ public class BinHeap<E> implements PrioQueue<E> {
 
 
 	// Returns element of highest priority and removes it
-	public E poll() {
+	public Pair poll() {
 		if (heap.size() > 0) {
-			E temp = heap.get(0);
+			Pair temp = heap.get(0);
 			// Replace element with last element
 			
 			heap.set(0, heap.get(heap.size() - 1));
@@ -139,7 +139,7 @@ public class BinHeap<E> implements PrioQueue<E> {
 	}
 
 
-	public void remove(E e) {
+	public void remove(Pair e) {
 		for (int index = 0; index < heap.size(); index++) {
 			if (e.equals(heap.get(index))) {
 				// Replace element with last element
@@ -153,14 +153,14 @@ public class BinHeap<E> implements PrioQueue<E> {
 		}
 	}
 
-	public ArrayList<E> getList() {
+	public ArrayList<Pair> getList() {
 		return heap;
 	}
 
 
 
 }
-
+*/
 
 
 
