@@ -25,5 +25,5 @@ public class Pair<A, B> {
     @Override
     public int hashCode() {
         return Objects.hash(a.hashCode(), b.hashCode());
-    }
+    }    
 }

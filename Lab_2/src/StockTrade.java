@@ -56,7 +56,7 @@ public class StockTrade {
 	
 	
 	public Transaction eventualTransaction(){
-		// If highest bid(seller) <= lowest price (buyer), make transaction lol 
+		// If highest bid(seller) <= lowest price (buyer), make transaction lol
 		if (sellersQueue.peek() != null && buyersQueue.peek() != null){
 			if (sellersQueue.peek().price <= buyersQueue.peek().price) {
 				Bid seller = sellersQueue.poll();

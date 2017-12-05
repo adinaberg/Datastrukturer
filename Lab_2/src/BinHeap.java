@@ -157,8 +157,6 @@ public class BinHeap<E> implements PrioQueue<E> {
 		return heap;
 	}
 
-
-
 }
 
 
