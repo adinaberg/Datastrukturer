@@ -1,15 +1,18 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Graph {
+	public Map<String, ArrayList<Pair<String, Integer>>> map;
 	
-	
-	
-	public Graph() { 
-
+	public Graph() {
+		map = new HashMap<>();
 	}
 
-	public void addVertice(String label) { 
-
+	public void addVertice(String label) {
+		
+		
 	}
 
 	public void addEdge(String node1, String node2, int dist) {
