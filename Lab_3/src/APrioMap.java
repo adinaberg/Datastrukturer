@@ -1,17 +1,16 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class APrioMap<K, V extends Comparable<? super V>> implements PrioMap<K, V> {
 
-	// BinHeap for debugging; change to PrioQueue!
-	public BinHeap<Pair<K, V>> heap;
+	public PrioQueue<Pair<K, V>> heap;
 	// Mapping from key value to Pair with exactly same key value and value associated with key
 	Map<K, Pair<K,V>> map;
 
+	//Constructor
 	public APrioMap() {
-		heap = new BinHeap<Pair<K, V>>(new PairComparator<K, V>());
+		heap = new FastBinHeap<Pair<K, V>>(new PairComparator<K, V>());
 		map = new HashMap<K, Pair<K,V>>();
 	}
 
@@ -19,19 +18,16 @@ public class APrioMap<K, V extends Comparable<? super V>> implements PrioMap<K, 
 		if (map.containsKey(k)) {
 			// Do not have to remove old (k,Pair<k,v>) from map since it is overwritten
 			heap.remove(map.get(k));
-			//System.out.println("In APrioMap removing " + map.get(k) + " from heap");
-			//System.out.println("Heap after remove " + heap.getList());
 		}
-		// If key k already is contained in map, old value is replaced
 		Pair<K, V> newPair = new Pair<K, V>(k,v);
+		// If key k already is contained in map, old value is replaced
 		map.put(k, newPair);
-		//System.out.println("In APrioMap adding " + newPair + " to heap" );
 		// Place new Pair in heap
 		heap.add(newPair);	
 	}
 
 	
-	// Returns value of 
+	// Returns value of k
 	public V get(K k) {
 		// Do not want to look up k twice
 		Pair<K, V> p = map.get(k);
@@ -58,12 +54,4 @@ public class APrioMap<K, V extends Comparable<? super V>> implements PrioMap<K, 
 		}
 		return null;
 	}
-
-
-	// For debugging only, remove later
-	public ArrayList<Pair<K,V>> getPrioList() {
-		return heap.getList();
-	}
-
-
 }

@@ -3,12 +3,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class FastBinHeap<E> implements PrioQueue<E> {
-
-	ArrayList<E> heap;
+	
+	// List of elements element in increasing order
+	List<E> heap;
 	Comparator<? super E> comp;
+	// Mapping from element to its position in the 
 	Map<E, Integer> map;
 
 	// Constructor
@@ -47,20 +50,10 @@ public class FastBinHeap<E> implements PrioQueue<E> {
 	private void bubbleUp(int index) {
 		if (heap.size() > 1 && index < heap.size()) {
 			int parent;
-			E temp;
 			if (index != 0) {
 				parent = (index - 1)/2;
-				if (comp.compare(heap.get(index), heap.get(parent)) < 0) {
-					// Save child locally
-					temp = heap.get(index);
-					// Switch places
-					heap.set(index, heap.get(parent));
-					// Update mapping from element to index
-					map.put(heap.get(parent), index);
-					
-					heap.set(parent, temp);
-					map.put(temp, parent);
-					
+				if (comp.compare(heap.get(index), heap.get(parent)) < 0) {					
+					swap(index, parent);
 					// Recursive call to bubbleUp
 					bubbleUp(parent);
 				}
@@ -75,21 +68,13 @@ public class FastBinHeap<E> implements PrioQueue<E> {
 			int child1 = index*2 + 1;
 			int child2 = index*2 + 2;
 			int winnerChild;
-			E temp;
 			// If not at bottom
 			if (child1  < heap.size()) {
 				// Have only left child
 				if (child2 > heap.size() - 1) {
 					// If parent larger than child
 					if (comp.compare(heap.get(index), heap.get(child1)) > 0) {
-						// Save parent locally
-						temp = heap.get(index);
-						// Switch places
-						heap.set(index, heap.get(child1));
-						map.put(heap.get(child1), index);
-
-						heap.set(child1, temp);
-						map.put(temp, child1);
+						swap(index, child1);
 
 					}
 				}
@@ -104,11 +89,7 @@ public class FastBinHeap<E> implements PrioQueue<E> {
 					}
 					// Compare parent to winnerChild
 					if (comp.compare(heap.get(index), heap.get(winnerChild)) > 0) {
-						// Save parent locally
-						temp = heap.get(index);
-						// Switch places
-						heap.set(index, heap.get(winnerChild));
-						heap.set(winnerChild, temp);
+						swap(index, winnerChild);
 						// Recursive call to bubbleDown
 						bubbleDown(winnerChild);
 
@@ -119,11 +100,25 @@ public class FastBinHeap<E> implements PrioQueue<E> {
 
 	}
 
+	// Swap places and update mapping
+	public void swap(int higher, int lower) {
+		// Save higher element locally
+		E temp = heap.get(higher);
+		// Switch places
+		heap.set(higher, heap.get(lower));
+		map.put(heap.get(lower), higher);
+		
+		heap.set(lower, temp);
+		map.put(temp, lower);
+	}
+	
+	
 
 	// Adds element in right position of the queue
 	public void add(E e) {
 		heap.add(e);
 		map.put(e, heap.size() - 1);
+
 		bubbleUp(heap.size() - 1);
 	}
 
@@ -176,12 +171,13 @@ public class FastBinHeap<E> implements PrioQueue<E> {
 		}
 	}
 
-	public ArrayList<E> getList() {
+	public List<E> getList() {
 		return heap;
 	}
-
-
-
+	
+	public Map<E, Integer> getMap() {
+		return map;
+	}
 }
 
 
