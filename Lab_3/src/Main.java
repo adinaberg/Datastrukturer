@@ -1,7 +1,6 @@
 
 public class Main {
 	
-	
 	public static void main(String[] args) {
 		
 		/*APrioMap<String, Integer> apr = new APrioMap<>();
@@ -13,19 +12,24 @@ public class Main {
 		System.out.println(apr.getPrioList());
 		System.out.println(apr.poll());
 		System.out.println(apr.get("Fourth"));*/
-		
 		Graph g = new Graph();
-		g.addVertice("A");
-		g.addVertice("B");
-		g.addVertice("C");
-		g.addVertice("D");
-		g.addVertice("E");
-		g.addVertice("F");
-		g.addEdge("A", "B", 2);
-		g.addEdge("B", "E", 3);
-		g.addEdge("A", "D", 7);
-		g.addEdge("D", "E", 1);
-		g.addEdge("B", "C", 1);
+		g.addVertice("V0");
+		g.addVertice("V1");
+		g.addVertice("V2");
+		g.addVertice("V3");
+		g.addVertice("V4");
+		g.addEdge("V4", "V2", 2);
+		g.addEdge("V0", "V4", 1);
+		g.addEdge("V3", "V0", 2);
+		g.addEdge("V3", "V1", 0);
+		g.addEdge("V4", "V1", 0);
+		g.addEdge("V4", "V3", 4);
+		g.addEdge("V0", "V1", 1);
+		
+		//System.out.println(g.shortestPath("V3", "V0"));
+		//System.out.println(g.shortestPath("V4", "V1"));
+		System.out.println(g.shortestPath("V4", "V0"));
+
 	}
 
 }
