@@ -54,7 +54,7 @@ public class Graph {
 	// Returns the shortest path from some node start to some node dest using Dijkstra's algorithm
 	public Path shortestPath(String start, String dest) {
 		// Currently known shortest distances to all nodes in graph
-		APrioMap<String, Integer> verticeCost = new APrioMap<>();
+		PrioMap<String, Integer> verticeCost = new APrioMap<>();
 		// Mapping from every node to its currently best predecessor
 		Map<String, String> parent = new HashMap<>();
 		// Final shortest distances to all nodes in graph

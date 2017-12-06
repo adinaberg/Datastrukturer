@@ -1,1 +1,55 @@
-Here we shall analyse time complexity
+DAT037 Lab 3 Group 56
+
+Analysis of time complexity of method shortestPath
+
+Here, the number of vertices in the graph is denoted by |V| and the number of edges by |E|.
+
+
+Declaring and instantiating local variables is O(1).
+
+nodeList.get(i) is O(1), and thus initializing verticeCost for all nodes in graph is 
+O(|V| * 'complexity of put in APrioMap').
+
+The put() in APrioMap uses the add method implemented in FastBinHeap, which is identical 
+to the add method in previously implemented BinHeap. Because it is a binary search tree, this
+operation is of complexity log(|V|) (amortized). The implementation FastBinHeap is different from BinHeap in that
+it uses a HashMap to keep track of the index of all elements added in the heap, thus reducing time
+complexity of the method remove() from linear time to constant time. Assuming that HashMap uses
+a perfect Hash function, the operations containsKey() and put() require constant time. All other
+operations in put() are of time complexity O(1).
+
+Thus, the loop initializing verticeCost for all nodes is O(|V|*log(|V|)).
+
+Updating the value of the startnode in verticeCost is as mentioned O(log|V|) amortized.
+
+Declaring a new Pair object and polling from the APrioMap requires constant time as well
+as the if statement.
+
+Assuming a perfect Hash function, adding a map entry in the HashMap bestCost is O(1).
+
+Since APrioMap is implemented using a HashMap to look for elements, retrieving a list of all
+neighbours to the current node requires constant time assuming a perfect Hash function.
+
+Using similar reasoning as previously, the first two statements inside the for loop
+looping through all neighbouring nodes both take constant time, as well as the if
+statement. Adding a new element in verticeCost has, as stated previously, an amortized
+time complexity of O(log(|V|)). The last operation in the for loop requires constant time, 
+once again assuming perfect Hash function.
+
+The foor loop which possibly may loop through all neighbours of all nodes and update verticeCost
+each time will therefor have a worst case time complexity of O(|E|*log(|V|)).
+
+Declaring and instantiating an ArrayList requires constant time as well as the operation of
+adding nodes to said List. The while loop collecting all predecessors to the destination node
+will at worst case execute |V| times, giving a time complexity of O(|V|) since both adding to
+the List and collecting a value from the parent map have O(1) time complexity.
+
+Reversing the list of nodes will have a O(|parentList|) time complexity, which at most can be O(|V|).
+
+
+Finally, instantiating a new Path object and returning it will execute in constant time.
+
+Altogether, we see that the shortestPath method will have a time complexity of O((|V| + |E|)*log(|V|)), as expected.
+
+
+
