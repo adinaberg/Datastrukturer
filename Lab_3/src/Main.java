@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class Main {
 
@@ -8,7 +9,7 @@ public class Main {
 
 
 
-
+/*
 
 		//binh.add(new Pair<String, Integer>("V4", 6));
 		//System.out.println(binh.getList());
@@ -51,8 +52,7 @@ public class Main {
 		//System.out.println(g.shortestPath("V4", "V1"));
 		System.out.println(g.shortestPath("V4", "V0"));
 
-		 */
-		
+
 		Graph g = new Graph();
 		g.addVertice("V0");
 		g.addVertice("V1");		
@@ -63,9 +63,7 @@ public class Main {
 		System.out.println(g.shortestPath("V0", "V1"));
 
 
-
-
-
+		 */
 	}
 
 }

@@ -4,4 +4,5 @@ public interface PrioQueue<E> extends Iterable<E> {
     E peek();
     E poll();
     void remove(E e);
+    
 }
